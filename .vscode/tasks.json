@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Desenvolvimento",
+            "type": "shell",
+            "dependsOn": [
+                "Configurar VENV",
+                "Configurar PATH",
+                "Inciar VBA EDIT"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Configurar VENV",
+            "type": "shell",
+            "windows": {"command": "python -m venv .venv; .venv/Scripts/activate; pip install --upgrade pip; pip install -r requirements.txt"},
+            "osx": {"command": "python3 -m venv .venv; source .venv/bin/activate; pip3 install --upgrade pip; pip3 install -r requirements.txt"}
+        },
+        {
+            "label": "Configurar PATH",
+            "type": "shell",
+            "windows": {"command": "New-Item -Path .venv/Lib/site-packages/main.pth -ItemType file -Value $(pwd) -Force"},
+            "osx": {"command": "echo $(pwd) > .venv/lib/python3.12/site-packages/main.pth"}
+        },
+        {
+            "label": "Inciar VBA EDIT",
+            "type": "shell",
+            "windows": {"command": ".venv/Scripts/activate; cd ${input:inputFolder}; xlwings vba edit"},
+            "osx": {"command": "source .venv/bin/activate; cd ${input:inputFolder}; xlwings vba edit"}
+        }
+    ],
+    "inputs": [
+        {
+            "id": "inputFolder",
+            "description": "Pasta onde sera editado os arquivos .bas",
+            "type": "promptString",
+        }
+    ]
+}
