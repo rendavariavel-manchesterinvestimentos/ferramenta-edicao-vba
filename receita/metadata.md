@@ -1,0 +1,1 @@
+local_planilha: https://agenteinvest.sharepoint.com/:x:/r/sites/mesarv01teams-Backoffice/Shared%20Documents/Backoffice/Operacional/Receita/receita.xlsm?d=w1c263a6fdf074491a200903d9f1b123a&csf=1&web=1&e=RZf59z
