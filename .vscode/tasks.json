@@ -18,8 +18,8 @@
         {
             "label": "Configurar VENV",
             "type": "shell",
-            "windows": {"command": "python -m venv .venv; .venv/Scripts/activate; pip install --upgrade pip; pip install -r requirements.txt"},
-            "osx": {"command": "python3 -m venv .venv; source .venv/bin/activate; pip3 install --upgrade pip; pip3 install -r requirements.txt"}
+            "windows": {"command": "python -m venv .venv; .venv/Scripts/activate; python -m pip install --upgrade pip; pip install -r requirements.txt"},
+            "osx": {"command": "python3 -m venv .venv; source .venv/bin/activate; python3 -m pip3 install --upgrade pip; pip3 install -r requirements.txt"}
         },
         {
             "label": "Configurar PATH",
@@ -30,14 +30,23 @@
         {
             "label": "Inciar VBA EDIT",
             "type": "shell",
-            "windows": {"command": ".venv/Scripts/activate; cd ${input:inputFolder}; xlwings vba edit"},
-            "osx": {"command": "source .venv/bin/activate; cd ${input:inputFolder}; xlwings vba edit"}
+            "windows": {"command": ".venv/Scripts/activate; cd ${input:inputFolder}; xlwings vba edit -f ${input:inputFile} -v"},
+            "osx": {"command": "source .venv/bin/activate; cd ${input:inputFolder}; xlwings vba edit -f ${input:inputFile} -v"},
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ],
     "inputs": [
         {
             "id": "inputFolder",
-            "description": "Pasta onde sera editado os arquivos .bas",
+            "description": "Pasta onde serao armazenados os arquivos '.bas'",
+            "type": "promptString",
+        },
+        {
+            "id": "inputFile",
+            "description": "Caminho do arquivo que tera os codigos VBA",
             "type": "promptString",
         }
     ]
