@@ -41,12 +41,12 @@
     "inputs": [
         {
             "id": "inputFolder",
-            "description": "Pasta onde serao armazenados os arquivos '.bas'",
+            "description": "Onde serão armazenados os arquivos '.bas' com código VBA, passe o caminho completo",
             "type": "promptString",
         },
         {
             "id": "inputFile",
-            "description": "Caminho do arquivo que tera os codigos VBA",
+            "description": "Caminho do arquivo com os códigos VBA, passe o caminho completo",
             "type": "promptString",
         }
     ]
