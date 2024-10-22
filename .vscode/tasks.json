@@ -2,12 +2,11 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Desenvolvimento",
+            "label": "Configurar Ambiente",
             "type": "shell",
             "dependsOn": [
                 "Configurar VENV",
-                "Configurar PATH",
-                "Inciar VBA EDIT"
+                "Configurar PATH"
             ],
             "dependsOrder": "sequence",
             "group": {
