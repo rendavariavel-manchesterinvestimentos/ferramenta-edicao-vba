@@ -1,5 +1,5 @@
 ---
 spreadsheet:
-  - url_planilha_sharepoint: NULL
-  - senha_planilha: NULL
+  - file_path_url: NULL
+  - file_password: NULL
 ...
