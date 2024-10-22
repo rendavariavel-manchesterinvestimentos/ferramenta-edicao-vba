@@ -27,10 +27,20 @@
             "osx": {"command": "echo $(pwd) > .venv/lib/python3.12/site-packages/main.pth"}
         },
         {
-            "label": "Inciar VBA EDIT",
+            "label": "Vba EDIT",
             "type": "shell",
             "windows": {"command": ".venv/Scripts/activate; cd ${input:inputFolder}; xlwings vba edit -f ${input:inputFile} -v"},
             "osx": {"command": "source .venv/bin/activate; cd ${input:inputFolder}; xlwings vba edit -f ${input:inputFile} -v"},
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Vba IMPORT",
+            "type": "shell",
+            "windows": {"command": ".venv/Scripts/activate; cd ${input:inputFolder}; xlwings vba import -f ${input:inputFile} -v"},
+            "osx": {"command": "source .venv/bin/activate; cd ${input:inputFolder}; xlwings vba import -f ${input:inputFile} -v"},
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -40,12 +50,12 @@
     "inputs": [
         {
             "id": "inputFolder",
-            "description": "Onde serão armazenados os arquivos '.bas' com código VBA, passe o caminho completo",
+            "description": "Onde estão armazenados os arquivos '.bas' com código VBA, passe o caminho completo",
             "type": "promptString",
         },
         {
             "id": "inputFile",
-            "description": "Caminho do arquivo com os códigos VBA, passe o caminho completo",
+            "description": "Caminho do arquivo excel dos códigos VBA, passe o caminho completo",
             "type": "promptString",
         }
     ]
