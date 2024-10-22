@@ -32,6 +32,17 @@ This task manages to open the `.xlsm` file and import all the existing VBA `.bas
 * What's the path where the VBA `.bas` are stored.
 * What's the path for the `.xlsm` file that will be edited.
 
-### 4 Troubleshooting
+### 4 Important considerations
+#### 4.1 File creation
+When creating new VBA `.bas` file, use the `Create file` task or place at the top of the file the below code __it's extremely importatnt__:
+```
+Attribute VB_Name = "__file__"
+```
+That way xlwings can know which name to add onto the `.xlsm` file, or you can use the `Create file` task.
+
+#### 4.2 System support
+The current project was created and tested on python 3.12 on a Windowns 11 machine, currently MacOs is not supported, but it'll be soon.
+
+### 5 Troubleshooting
 * xlwings errors: Verify if macros are enabled, see [this link](https://support.microsoft.com/en-us/office/enable-or-disable-macros-in-microsoft-365-files-12b036fd-d140-4e74-b45e-16fed1a7e5c6)
 * shell errors: Verify if python is installed, the `.venv` setted and [requirements](./requirements.txt) installed.
