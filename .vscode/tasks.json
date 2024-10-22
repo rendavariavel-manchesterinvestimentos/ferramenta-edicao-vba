@@ -55,6 +55,16 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "Create file",
+            "type": "shell",
+            "windows": {"command": "New-Item -Path ${input:inputFolder}/new_file.bas -ItemType file -Value 'Attribute VB_Name = \"new_file\"' -Force"},
+            "osx": {"command": "echo $(pwd) > .venv/lib/python3.12/site-packages/main.pth"},
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ],
     "inputs": [
