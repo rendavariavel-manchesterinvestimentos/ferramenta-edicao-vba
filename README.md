@@ -20,7 +20,7 @@ By pressing `ctrl + shif + B` some options will appear:
 This task will configure the virtual environment (`.venv`) for the give python version you're using and install on this `.venv` [requirements](requirements.txt) needed for the project.
 
 #### 3.2 Create a new project
-This task will create on this repo a folder based on our [model](./docs/modelo) to concentrate all your VBA `.bas` files for a given `.xlsm`, and if you're using git by forking this repo, or another method, you have the advantage of version control.
+This task will create on this repo a folder based on our [model](./docs/model) to concentrate all your VBA `.bas` files for a given `.xlsm`, and if you're using git by forking this repo, or another method, you have the advantage of version control.
 
 #### 3.3 Vba EDIT
 This task manages to open the `.xlsm` file and export all the existing VBA `.bas` on it, this is a destructive action so if you have other `.bas` files with the same name, they'll be subscripted. This task will prompt you for:

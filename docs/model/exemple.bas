@@ -1,5 +1,5 @@
-Attribute VB_Name = "exemplo"
-Function FormatarTemplate(caminhoArquivo As String, dados As Object) As String
+Attribute VB_Name = "exemple"
+Function FormatTextWithDict(caminhoArquivo As String, dados As Object) As String
     'Funcao para abrir um arquivo de texto "template"
     'Args:
         '- caminhoArquivo: caminho do arquivo como path para ser aberto e formatado
@@ -36,7 +36,7 @@ Function FormatarTemplate(caminhoArquivo As String, dados As Object) As String
     Next chave
 
     'Return da função
-    FormatarTemplate = conteudoArquivo
+    FormatTextWithDict = conteudoArquivo
     Exit Function
 
 'Tratamento de erro ao ler arquivo
