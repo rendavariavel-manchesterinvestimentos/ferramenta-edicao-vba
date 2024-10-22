@@ -31,3 +31,7 @@ This task manages to open the `.xlsm` file and export all the existing VBA `.bas
 This task manages to open the `.xlsm` file and import all the existing VBA `.bas` on a given directory. This task will prompt you for:
 * What's the path where the VBA `.bas` are stored.
 * What's the path for the `.xlsm` file that will be edited.
+
+### 4 Troubleshooting
+* xlwings errors: Verify if macros are enabled, see [this link](https://support.microsoft.com/en-us/office/enable-or-disable-macros-in-microsoft-365-files-12b036fd-d140-4e74-b45e-16fed1a7e5c6)
+* shell errors: Verify if python is installed, the `.venv` setted and [requirements](./requirements.txt) installed.
