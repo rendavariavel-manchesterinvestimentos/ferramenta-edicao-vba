@@ -1,5 +1,5 @@
 # Vscode vba editing tool
-Vscode tool with python and [xlwings library cli](https://docs.xlwings.org/en/latest/command_line.html) to easily edit and sync VBA code to excel. Based on this [xlwings tutorial](https://youtu.be/xoO-Fx0fTpM)
+Vscode tool with python and [xlwings library cli](https://docs.xlwings.org/en/latest/command_line.html) to easily edit and sync VBA code from a repository to excel. Based on this [xlwings tutorial](https://youtu.be/xoO-Fx0fTpM)
 
 ## How to use?
 ### 1. Download
