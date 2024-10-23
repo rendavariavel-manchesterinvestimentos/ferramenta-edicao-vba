@@ -22,6 +22,8 @@ This task will configure the virtual environment (`.venv`) for the give python v
 
 #### 3.2 Create a new project
 This task will create on this repo a folder based on our [model](./docs/model) to concentrate all your VBA `.bas` files for a given `.xlsm`, and if you're using git by forking this repo, or another method, you have the advantage of version control.
+<br>A project consists of a folder with VBA files on it and a [metadata.yml](./docs/model/metadata.yml) that contains useful information about the project or specific files, configure it as you wish by now, but in the future this will be standardized with a custom built python manager.
+<br>My suggestion is, create one project for each `.xlsm` file as VBA Import will import everything.
 
 #### 3.3 Create file
 This task will create on a folder a `.bas` file based on this [exemple.bas](./docs/model/exemple.bas) file, it's important to use this task or follow the recommendations in [4.1](README.md#41-file-creation).This task will prompt you for:
