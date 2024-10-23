@@ -13,8 +13,9 @@ To use this tool you need to be on Vscode or Cursor IDE's, the whole project it'
 By pressing `ctrl + shif + B` some options will appear:
 1. Configure Environment
 2. Create new project
-3. Vba EDIT
-4. Vba IMPORT
+3. Create file
+4. Vba EDIT
+5. Vba IMPORT
 
 #### 3.1 Configure Environment
 This task will configure the virtual environment (`.venv`) for the give python version you're using and install on this `.venv` [requirements](requirements.txt) needed for the project.
@@ -22,12 +23,16 @@ This task will configure the virtual environment (`.venv`) for the give python v
 #### 3.2 Create a new project
 This task will create on this repo a folder based on our [model](./docs/model) to concentrate all your VBA `.bas` files for a given `.xlsm`, and if you're using git by forking this repo, or another method, you have the advantage of version control.
 
-#### 3.3 Vba EDIT
+#### 3.3 Create file
+This task will create on a folder a `.bas` file based on this [exemple.bas](./docs/model/exemple.bas) file, it's important to use this task or follow the recommendations in [4.1](README.md#41-file-creation).This task will prompt you for:
+* What's the path where the VBA `.bas` will be stored.
+
+#### 3.4 Vba EDIT
 This task manages to open the `.xlsm` file and export all the existing VBA `.bas` on it, this is a destructive action so if you have other `.bas` files with the same name, they'll be subscripted. This task will prompt you for:
 * What's the path where the VBA `.bas` will be stored.
 * What's the path for the `.xlsm` file that will be edited.
 
-#### 3.4 Vba IMPORT
+#### 3.5 Vba IMPORT
 This task manages to open the `.xlsm` file and import all the existing VBA `.bas` on a given directory. This task will prompt you for:
 * What's the path where the VBA `.bas` are stored.
 * What's the path for the `.xlsm` file that will be edited.
