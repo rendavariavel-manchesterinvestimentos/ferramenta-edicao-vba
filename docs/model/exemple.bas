@@ -1,45 +1,45 @@
 Attribute VB_Name = "exemple"
-Function FormatTextWithDict(caminhoArquivo As String, dados As Object) As String
-    'Funcao para abrir um arquivo de texto "template"
+Function FormatTextWithDict(filePath As String, data As Object) As String
+    'Opens a text file with placeholders and replaces them with the values from a dictionary
     'Args:
-        '- caminhoArquivo: caminho do arquivo como path para ser aberto e formatado
-        '- dados: dicionario contendo as informacoes para formatar o arquivo
+        '- filePath: path of the file to be opened and formatted
+        '- data: dictionary with the values to replace the placeholders
     'Raises:
-        '- 13: Type Mismatch, o argumento não é um dicionário
-        '- 75: Path/File access error, não foi possível lêr o arquivo
+        '- 13: Type Mismatch, the 'data' argument is not a dictionary
+        '- 75: Path/File access error, it was not possible to open/read the file
     'Returns:
-        '- Texto do arquivo aberto e formatado
+        '- Formated text file as string
 
-    Dim chave As Variant
-    Dim numeroArquivo As Integer
-    Dim conteudoArquivo As String
+    Dim key As Variant
+    Dim fileNumber As Integer
+    Dim fileContent As String
 
-    'Checa se o argumento Dados é Dicionário
-    If Not TypeName(dados) = "Dictionary" Then
-        Err.Raise Number:=13, Description:="Type Mismatch: O argumento não é um dicionário válido."
+    'Checks if the data argument is a dictionary
+    If Not TypeName(data) = "Dictionary" Then
+        Err.Raise Number:=13, Description:="Type Mismatch: The 'data' argument is not a dictionary."
     End If
 
-    'Informa qual espaco de memória usar
-    numeroArquivo = FreeFile
+    'Informs the space in memory for the file
+    fileNumber = FreeFile
 
-    'Abrir o arquivo para leitura
-    On Error GoTo ErroAbrirArquivo
-    Open caminhoArquivo For Input As numeroArquivo
+    'Reads the file content
+    On Error GoTo ReadFileError
+    Open filePath For Input As fileNumber
         'LOF lê o arquivo em bytes e aloca na variável
-        conteudoArquivo = Input(LOF(numeroArquivo), numeroArquivo)
-    Close numeroArquivo
+        fileContent = Input(LOF(fileNumber), fileNumber)
+    Close fileNumber
 
-    'Formatar o arquivo
-    For Each chave In dados.Keys
+    'Formats the text placeholders with the dictionary values
+    For Each key In data.Keys
         'Substituir cada placeholder pelo valor correspondente
-        conteudoArquivo = Replace(conteudoArquivo, "{{" & chave & "}}", dados(chave))
-    Next chave
+        fileContent = Replace(fileContent, "{{" & key & "}}", data(key))
+    Next key
 
-    'Return da função
-    FormatTextWithDict = conteudoArquivo
+    'Returns the formatted text
+    FormatTextWithDict = fileContent
     Exit Function
 
-'Tratamento de erro ao ler arquivo
-ErroAbrirArquivo:
-    Err.Raise Number:=75, Description:="Path/File access error: Não foi possível abrir o arquivo"
+'Error treatment
+ReadFileError:
+    Err.Raise Number:=75, Description:="Path/File access error: It was not possible to open/read the file"
 End Function
