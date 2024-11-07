@@ -1,6 +1,6 @@
 Attribute VB_Name = "Módulo1"
-Sub teste()
-Attribute teste.VB_ProcData.VB_Invoke_Func = " \n14"
+Sub Teste()
+Attribute Teste.VB_ProcData.VB_Invoke_Func = " \n14"
 
 Set boletera = ThisWorkbook
 Set boleta = boletera.Sheets("BOLET. AVULSAS")

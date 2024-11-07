@@ -46,7 +46,7 @@ basket:
     On Error Resume Next
     With export.AutoFilter.Sort
         .SortFields.Clear
-        .SortFields.Add2 key _
+        .SortFields.Add2 Key _
             :=Range("A1:A10000"), SortOn:=xlSortOnValues, Order:=xlAscending, _
             DataOption:=xlSortNormal
         .Header = xlYes
@@ -100,7 +100,7 @@ Attribute EXPORT_BASKET.VB_ProcData.VB_Invoke_Func = " \n14"
 '
     Dim endereco As String
     Dim salvar As String
-    Dim Data As String
+    Dim data As String
     Dim cliente As String
     Dim broker
     Dim testestr
@@ -152,7 +152,7 @@ proximaparte:
         FileCopy modelo, salvar & "\RECEITA AVULSA.xlsx"
     End If
     salvar = salvar & "\RECEITA AVULSA.xlsx"
-    Data = CStr(base.Range("AK8").Value)
+    data = CStr(base.Range("AK8").Value)
     cliente = base.Range("AL7")
     On Error Resume Next
     broker = base.Range("AM7").Value
@@ -208,7 +208,7 @@ proximaparte:
         Dlin = 2
     End If
     
-    Range("A" & Dlin).Value = Data
+    Range("A" & Dlin).Value = data
     Range("B" & Dlin).Value = cliente
     Range("C" & Dlin).Value = broker
     ActiveWorkbook.Save

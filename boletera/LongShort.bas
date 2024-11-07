@@ -334,7 +334,7 @@ Set ls = atualizador.Sheets("LONG & SHORT")
 Set base = atualizador.Sheets("BASE")
 Set export = atualizador.Sheets("BASKET L&S")
 
-Data = base.Range("AK8").Value
+data = base.Range("AK8").Value
 
 broker = ls.Range("C4").Value
 codigo = ls.Range("C3").Value
@@ -354,7 +354,7 @@ abaplanilha.Range("B" & lastrowreceita).PasteSpecial xlPasteValues
 
 lastrowreceita2 = abaplanilha.Cells(Rows.Count, 2).End(xlUp).Row
 
-abaplanilha.Range("A" & lastrowreceita & ":A" & lastrowreceita2).Value = Data
+abaplanilha.Range("A" & lastrowreceita & ":A" & lastrowreceita2).Value = data
 abaplanilha.Range("C" & lastrowreceita & ":C" & lastrowreceita2).Value = codigo
 
 arquivobroker.Close savechanges:=True
@@ -367,7 +367,7 @@ End Sub
 Sub Macro3()
 
     ActiveWorkbook.Worksheets("BASKET L&S").AutoFilter.Sort.SortFields.Clear
-    ActiveWorkbook.Worksheets("BASKET L&S").AutoFilter.Sort.SortFields.Add2 key:= _
+    ActiveWorkbook.Worksheets("BASKET L&S").AutoFilter.Sort.SortFields.Add2 Key:= _
         Range("D1"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
         xlSortNormal
     With ActiveWorkbook.Worksheets("BASKET L&S").AutoFilter.Sort

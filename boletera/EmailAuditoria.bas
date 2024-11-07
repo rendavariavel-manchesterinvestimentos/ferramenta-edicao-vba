@@ -192,7 +192,7 @@ Function RangetoHTML(rng As Range)
     'Read all data from the htm file into RangetoHTML
     Set fso = CreateObject("Scripting.FileSystemObject")
     Set ts = fso.GetFile(TempFile).OpenAsTextStream(1, -2)
-    RangetoHTML = ts.ReadAll
+    RangetoHTML = ts.readall
     ts.Close
     RangetoHTML = Replace(RangetoHTML, "align=center x:publishsource=", _
                           "align=left x:publishsource=")

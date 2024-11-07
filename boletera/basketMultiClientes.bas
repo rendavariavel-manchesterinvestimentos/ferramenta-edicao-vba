@@ -43,7 +43,7 @@ Sub basketMultiClientes()
     
     With basket.AutoFilter.Sort
         .SortFields.Clear
-        .SortFields.Add2 key _
+        .SortFields.Add2 Key _
             :=Range("A1:A10000"), SortOn:=xlSortOnValues, Order:=xlAscending, _
             DataOption:=xlSortNormal
         .Header = xlYes

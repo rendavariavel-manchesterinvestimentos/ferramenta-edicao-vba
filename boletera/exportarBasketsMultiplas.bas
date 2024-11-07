@@ -16,7 +16,7 @@ Sub exportBasketMultiplas()
 '
     Dim endereco As String
     Dim salvar As String
-    Dim Data As String
+    Dim data As String
     Dim cliente As String
     Dim broker As String
     Dim testestr
@@ -73,7 +73,7 @@ proximaparte:
         FileCopy modelo, salvar & "\RECEITA AVULSA.xlsx"
     End If
     salvar = salvar & "\RECEITA AVULSA.xlsx"
-    Data = CStr(base.Range("AK8").Value)
+    data = CStr(base.Range("AK8").Value)
     cliente = base.Range("AL7")
     nome = dash.Range("C5").Value
     On Error Resume Next
@@ -140,7 +140,7 @@ proximaparte:
                 Dlin = 2
             End If
             
-            Range("A" & Dlin).Value = Data
+            Range("A" & Dlin).Value = data
             Range("B" & Dlin).Value = valor
             Range("C" & Dlin).Value = broker
             
