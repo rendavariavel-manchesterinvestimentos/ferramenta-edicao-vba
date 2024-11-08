@@ -54,21 +54,9 @@ Sub exportBasketMultiplas()
     caminho_arquivo_receita_avulsa_broker = EstaPastaDeTrabalho.fso.BuildPath(caminho_pasta_receita_broker, "RECEITA AVULSA.xlsx")
     caminho_arquivo_modelo_receita_avulsa = EstaPastaDeTrabalho.fso.BuildPath(caminho_pasta_boletera, "Templates\RECEITA AVULSA.xlsx")
 
-    ChDir caminho_pasta_boletera
-
-    For i = 65 To 90
-        letra = Chr(i)
-        If Left(caminho_pasta_boletera, 1) = letra Then
-            ChDrive letra
-            GoTo proximaparte
-        End If
-    Next
-
-proximaparte:
-
     'Cria a pasta de receita do broker se não existir
     'com o arquivo modelo de receita avulsa
-    If (Dir(caminho_pasta_receita_broker, vbDirectory) = "") Then
+    If Dir(caminho_pasta_receita_broker, vbDirectory) = "" Then
         MkDir (caminho_pasta_receita_broker)
         FileCopy caminho_arquivo_modelo_receita_avulsa, caminho_arquivo_receita_avulsa_broker
     End If
@@ -86,7 +74,7 @@ proximaparte:
     For i = 6 To 5000
         ultlin = dash.Cells(i, 3).Row
         valor = dash.Cells(i, 3).Value
-        If (valor = "") Then
+        If valor = "" Then
             Exit For
         ElseIf (cont < 5) Then
             nome = nome & "_" & valor
@@ -98,7 +86,7 @@ proximaparte:
     'Se cliente EX Mesa, registra no nome do arquivo como "NOVO"
     On Error Resume Next
     testeNA = (boletera.Range("C5").Value = CVErr(xlErrNA))
-    If (testeNA) Then
+    If testeNA Then
         nome = "NOVO"
     End If
 
@@ -116,44 +104,45 @@ proximaparte:
     'Separando as baskets
     For i = 5 To 5000
         valor = dash.Cells(i, 3).Value
-        If (valor = "") Then
+
+        If valor = "" Then
             Exit For
-        Else
-            nome = valor
-            On Error Resume Next
-            testeNA = (boletera.Range("C5").Value = CVErr(xlErrNA))
-            If (testeNA) Then
-                nome = "NOVO"
-            End If
+        End If
 
-            On Error Resume Next
-            If dash.Range("D" & i).Value <> "" Then GoTo prox:
-            wbRece = Workbooks.Open(caminho_arquivo_receita_avulsa_broker, Password:="2022")
+        nome = valor
+        On Error Resume Next
+        testeNA = (boletera.Range("C5").Value = CVErr(xlErrNA))
+        If testeNA Then
+            nome = "NOVO"
+        End If
 
-            Dlin = Range("A1").End(xlDown).Row + 1
+        On Error Resume Next
+        If dash.Range("D" & i).Value <> "" Then
+            nome_arquivo_acoes = "(AÇÕES) " & Year(Date) & " " & Format(Month(Date), "00") & " " & Format(Day(Date), "00") & " " & nome & " " & boletera.Range("H5").Value & " " & base.Range("AM6").Value & ".xlsx"
 
-            If Dlin > 200000 Then
-                Dlin = 2
-            End If
+            export.Range("A1:R500").AutoFilter Field:=1, Criteria1:=nome
+            export.Range("A1:R1", export.Range("A1:R1").End(xlDown)).Copy
 
-            Range("A" & Dlin).Value = data
-            Range("B" & Dlin).Value = valor
-            Range("C" & Dlin).Value = broker
+            Workbooks.Add
+            ActiveSheet.Paste
+            ActiveWorkbook.SaveAs Filename := EstaPastaDeTrabalho.fso.BuildPath(caminho_pasta_baskets, nome_arquivo_acoes), FileFormat := xlOpenXMLWorkbook, CreateBackup := False
+            ActiveWindow.Close
+        End If
 
-            ActiveWorkbook.Close savechanges:=True
+        wbRece = Workbooks.Open(caminho_arquivo_receita_avulsa_broker, Password := "2022")
 
-prox:
-    nome_arquivo_acoes = "(AÇÕES) " & Year(Date) & " " & Format(Month(Date), "00") & " " & Format(Day(Date), "00") & " " & nome & " " & boletera.Range("H5").Value & " " & base.Range("AM6").Value & ".xlsx"
+        Dlin = Range("A1").End(xlDown).Row + 1
 
-    export.Range("A1:R500").AutoFilter Field:=1, Criteria1:=nome
-    export.Range("A1:R1", export.Range("A1:R1").End(xlDown)).Copy
+        If Dlin > 200000 Then
+            Dlin = 2
+        End If
 
-    Workbooks.Add
-    ActiveSheet.Paste
-    ActiveWorkbook.SaveAs Filename := EstaPastaDeTrabalho.fso.BuildPath(caminho_pasta_baskets, nome_arquivo_acoes), FileFormat := xlOpenXMLWorkbook, CreateBackup := False
-    ActiveWindow.Close
-    End If
-Next
+        Range("A" & Dlin).Value = data
+        Range("B" & Dlin).Value = valor
+        Range("C" & Dlin).Value = broker
+
+        ActiveWorkbook.Close savechanges:=True
+    Next
 
     'Reativa configuraçõs do excel
     Application.ScreenUpdating = True
