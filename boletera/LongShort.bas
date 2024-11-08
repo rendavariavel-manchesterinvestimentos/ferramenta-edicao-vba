@@ -57,9 +57,9 @@ For i = 2 To lastrow:
         bskt.Range("D" & linha).Value = export.Range("A" & i).Value
         bskt.Range("E" & linha).Value = export.Range("F" & i).Value
         linha = linha + 1
-    
+
 proxlinha:
-    
+
     If export.Range("K" & i).Value > 0 Then
         bskt.Range("A" & linha).Value = export.Range("H" & i).Value
         bskt.Range("B" & linha).Value = "COMPRA"
@@ -68,7 +68,7 @@ proxlinha:
         bskt.Range("E" & linha).Value = export.Range("F" & i).Value
         linha = linha + 1
     End If
-        
+
     If export.Range("L" & i).Value = 0 Then GoTo proxlinha2:
         bskt.Range("A" & linha).Value = export.Range("C" & i).Value
         bskt.Range("B" & linha).Value = "VENDA"
@@ -76,9 +76,9 @@ proxlinha:
         bskt.Range("D" & linha).Value = export.Range("A" & i).Value
         bskt.Range("E" & linha).Value = export.Range("G" & i).Value
         linha = linha + 1
-    
+
 proxlinha2:
-        
+
     If export.Range("M" & i).Value > 0 Then
         bskt.Range("A" & linha).Value = export.Range("I" & i).Value
         bskt.Range("B" & linha).Value = "VENDA"
@@ -89,9 +89,9 @@ proxlinha2:
     End If
 
 Next
-    
+
     Call Macro3
-    
+
 End Sub
 
 Sub limpa()
@@ -111,33 +111,33 @@ Sub cotiza()
 
     Set atualizador = ThisWorkbook
     Set ls = atualizador.Sheets("LONG & SHORT")
-    
+
     Application.ScreenUpdating = False
-    
+
     lastrow = ls.Cells(Rows.Count, 5).End(xlUp).Row
     Application.DisplayAlerts = False
     For i = 9 To lastrow
         tickercompra = ls.Cells(i, 5)
         tickervenda = ls.Cells(i, 6)
-        
+
         cfuncBull = "BULLDDE|MOFC!" & tickercompra
         cfuncBullPro = "PRODDE|MOFC!" & tickercompra
         cfuncFinal = cfuncBull & ";" & cfuncBullPro
         cfuncFinal = "=SEERRO(" & cfuncFinal & ")*(1+$F$2)"
-        
+
         vfuncBullPro = "PRODDE|MOFV!" & tickervenda
         vfuncBull = "BULLDDE|MOFV!" & tickervenda
         vfuncFinal = vfuncBullPro & ";" & vfuncBull
         vfuncFinal = "=SEERRO(" & vfuncFinal & ")*(1-$F$3)"
-        
+
         ls.Cells(i, 7).FormulaLocal = cfuncFinal
         ls.Cells(i, 10).FormulaLocal = vfuncFinal
- 
+
     Next
-    
+
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
-    
+
 End Sub
 Sub validacao()
 
@@ -150,7 +150,7 @@ ThisWorkbook.Unprotect Password:="senhadaboletera"
 ThisWorkbook.Sheets("BASKET L&S").Visible = True
 
 If IsEmpty(ls.Range("C3")) Then
-MsgBox ("Coloque o seu cÛdigo de broker na cÈlula C3")
+MsgBox ("Coloque o seu c√≥digo de broker na c√©lula C3")
 Else
 Call montabasketTESTE
 Call exportbasket
@@ -162,124 +162,126 @@ End If
 
 End Sub
 Sub exportbasket()
-    
+
+    ' vari√°vel global
+    EstaPastaDeTrabalho.Importar_Variaveis_Globais
+
     Set atualizador = ThisWorkbook
     Set ls = atualizador.Sheets("LONG & SHORT")
     Set export = atualizador.Sheets("BASKET L&S")
-    
-    caminho = ThisWorkbook.Path
-    ChDir caminho
-    ChDir ".."
-    caminho = CurDir + "/2 - BASKETS/LONG&SHORT/"
+
+    ' caminho usando ONEDRIVE_GERAL
+    Dim caminhoBasket As String
+    caminhoBasket = fso.BuildPath(ONEDRIVE_GERAL, "Ferramentas\Boletera\Baskets\Long e short")
 
     Application.ScreenUpdating = False
 
     broker = ls.Range("C3").Value
-
     valor = ""
-    
+
     For i = 2 To 5000
 
         If valor = export.Cells(i, 4).Value Then GoTo oi
-        
+
         valor = export.Cells(i, 4).Value
         If (valor = "") Then
             Exit For
         Else
             nome = valor
-           
+
             arqnome = "(L&S) " & Year(Date) & " " & Format(Month(Date), "00") & " " & Format(Day(Date), "00") & " " & nome & " " & broker
 
             export.Range("A1:E100000").AutoFilter Field:=4, Criteria1:=nome
-            
+
             export.Range("A1:E1", export.Range("A1:E1").End(xlDown)).Copy
-            
+
             Workbooks.Add
             ActiveSheet.Paste
             ActiveWorkbook.Sheets.Add
-            
+
             Set basket = ActiveWorkbook.Sheets("Planilha1")
             Set basketemail = ActiveWorkbook.Sheets("Planilha2")
             basketemail.Name = "Auditoria Email"
             basket.Move before:=Sheets(1)
-            
+
             basketemail.Range("A5:D5").Merge
             basketemail.Range("A5") = "ORDENS A MERCADO"
             basketemail.Range("A6") = "Cliente"
             basketemail.Range("B6") = "Ativo"
             basketemail.Range("C6") = "C/V"
             basketemail.Range("D6") = "Qtd. Total"
-            
+
             lastrow = 5 + ActiveWorkbook.Sheets("Planilha1").Cells(Rows.Count, 5).End(xlUp).Row
-            
+
             basketemail.Range("A7").FormulaLocal = "=SE('Planilha1'!D2="""";"""";'Planilha1'!D2)"
             basketemail.Range("B7").FormulaLocal = "=SE('Planilha1'!A2="""";"""";'Planilha1'!A2)"
             basketemail.Range("C7").FormulaLocal = "=SE('Planilha1'!B2="""";"""";'Planilha1'!B2)"
             basketemail.Range("D7").FormulaLocal = "=SE('Planilha1'!C2="""";"""";'Planilha1'!C2)"
-            
+
             basketemail.Range("A7").AutoFill Destination:=basketemail.Range("A7:A" & lastrow)
             basketemail.Range("B7").AutoFill Destination:=basketemail.Range("B7:B" & lastrow)
             basketemail.Range("C7").AutoFill Destination:=basketemail.Range("C7:C" & lastrow)
             basketemail.Range("D7").AutoFill Destination:=basketemail.Range("D7:D" & lastrow)
-            
+
             basketemail.Range("A5:D" & lastrow).HorizontalAlignment = xlCenter
             basketemail.Range("A5:D" & lastrow).VerticalAlignment = xlCenter
-            
+
             basketemail.Range("A5:D" & lastrow).Borders(xlDiagonalDown).LineStyle = xlNone
             basketemail.Range("A5:D" & lastrow).Borders(xlDiagonalUp).LineStyle = xlNone
-        
-        With basketemail.Range("A5:D" & lastrow).Borders(xlEdgeLeft)
-            .LineStyle = xlContinuous
-            .ColorIndex = 0
-            .TintAndShade = 0
-            .Weight = xlThin
-        End With
-        With basketemail.Range("A5:D" & lastrow).Borders(xlEdgeTop)
-            .LineStyle = xlContinuous
-            .ColorIndex = 0
-            .TintAndShade = 0
-            .Weight = xlThin
-        End With
-        With basketemail.Range("A5:D" & lastrow).Borders(xlEdgeBottom)
-            .LineStyle = xlContinuous
-            .ColorIndex = 0
-            .TintAndShade = 0
-            .Weight = xlThin
-        End With
-        With basketemail.Range("A5:D" & lastrow).Borders(xlEdgeRight)
-            .LineStyle = xlContinuous
-            .ColorIndex = 0
-            .TintAndShade = 0
-            .Weight = xlThin
-        End With
-        With basketemail.Range("A5:D" & lastrow).Borders(xlInsideVertical)
-            .LineStyle = xlContinuous
-            .ColorIndex = 0
-            .TintAndShade = 0
-            .Weight = xlThin
-        End With
-        With basketemail.Range("A5:D" & lastrow).Borders(xlInsideHorizontal)
-            .LineStyle = xlContinuous
-            .ColorIndex = 0
-            .TintAndShade = 0
-            .Weight = xlThin
-        End With
+
+            With basketemail.Range("A5:D" & lastrow).Borders(xlEdgeLeft)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            With basketemail.Range("A5:D" & lastrow).Borders(xlEdgeTop)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            With basketemail.Range("A5:D" & lastrow).Borders(xlEdgeBottom)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            With basketemail.Range("A5:D" & lastrow).Borders(xlEdgeRight)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            With basketemail.Range("A5:D" & lastrow).Borders(xlInsideVertical)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            With basketemail.Range("A5:D" & lastrow).Borders(xlInsideHorizontal)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
             basketemail.Range("A5:D6").Font.Bold = True
             basketemail.Range("A1") = "Prezado(a),"
-            basketemail.Range("A3") = "VocÍ autoriza todas as operaÁıes descritas abaixo?"
-                
-            ActiveWorkbook.SaveAs Filename:=(caminho & arqnome & ".xlsx"), FileFormat:=xlOpenXMLWorkbook, CreateBackup:=False
+            basketemail.Range("A3") = "Voc√™ autoriza todas as opera√ß√µes descritas abaixo?"
+
+            ActiveWorkbook.SaveAs Filename:=fso.BuildPath(caminhoBasket, arqnome & ".xlsx"), FileFormat:=xlOpenXMLWorkbook, CreateBackup:=False
             ActiveWindow.Close
-            
+
 oi:
         End If
     Next
-    
+
     export.Range("A1:E100000").AutoFilter Field:=4
-    
+
     Application.ScreenUpdating = True
-    
+
 End Sub
+
 
 Sub colaformulas()
 
@@ -287,13 +289,13 @@ Set atualizador = ThisWorkbook
 Set ls = atualizador.Sheets("LONG & SHORT")
 
 Application.ScreenUpdating = False
-    
+
 lastrow = ls.Cells(Rows.Count, 2).End(xlUp).Row
 
-ls.Range("H9").FormulaLocal = "=SE(G9="""";"""";SEERRO(ARRED(((1-$F$4)*D9*(1+$F$2))/G9;0);""Sem preÁo""))"
+ls.Range("H9").FormulaLocal = "=SE(G9="""";"""";SEERRO(ARRED(((1-$F$4)*D9*(1+$F$2))/G9;0);""Sem pre√ßo""))"
 ls.Range("I9").FormulaLocal = "=G9*H9"
 
-ls.Range("K9").FormulaLocal = "=SE(I9="""";"""";SEERRO(ARRED((D9*(1-$F$3)/J9);0);""Sem preÁo""))"
+ls.Range("K9").FormulaLocal = "=SE(I9="""";"""";SEERRO(ARRED((D9*(1-$F$3)/J9);0);""Sem pre√ßo""))"
 ls.Range("L9").FormulaLocal = "=J9*K9"
 ls.Range("M9").FormulaLocal = "=L9-I9"
 ls.Range("N9").FormulaLocal = "=SE(D9="""";"""";SE(CONT.SE($B$9:B9;B9)>1;(I9+L9)*0,5%;(I9+L9)*0,5%+25,21))"
@@ -304,8 +306,8 @@ ls.Range("R9").FormulaLocal = "=SEERRO(G9/J9;""Verificar"")"
 ls.Range("S9").FormulaLocal = "=SE(D9="""";"""";SE(CONT.SE($B$9:B9;B9)>1;""Linha "" & PROCV(B9;B:X;22;0);2*SOMASE(B:B;B9;D:D)))"
 
 ls.Range("T9").FormulaLocal = "=SE(D9="""";"""";SE(CONT.SE($B$9:B9;B9)>1;""Linha "" & PROCV(B9;B:X;22;0);SEERRO(PROCV(B9;Garantia!L:M;2;0);""Fora da base"")))"
-ls.Range("U9").FormulaLocal = "=SE(ESQUERDA(S9;3)=""Ver"";""Linha "" & PROCV(B9;B:X;22;0);SEERRO(S9/PROCV(B9;AlocaÁ„o!A:C;3;0);""Fora da base""))"
-ls.Range("V9").FormulaLocal = "=SE(OU(E9="""";F9="""");"""";SE(CONT.SES(BASE!E:E;B9;BASE!F:F;E9)+CONT.SES(BASE!E:E;B9;BASE!F:F;F9);""Verificar custÛdia"";""OK""))"
+ls.Range("U9").FormulaLocal = "=SE(ESQUERDA(S9;3)=""Ver"";""Linha "" & PROCV(B9;B:X;22;0);SEERRO(S9/PROCV(B9;Aloca√ß√£o!A:C;3;0);""Fora da base""))"
+ls.Range("V9").FormulaLocal = "=SE(OU(E9="""";F9="""");"""";SE(CONT.SES(BASE!E:E;B9;BASE!F:F;E9)+CONT.SES(BASE!E:E;B9;BASE!F:F;F9);""Verificar cust√≥dia"";""OK""))"
 
 If lastrow > 9 Then
     ls.Range("H9").AutoFill Destination:=ls.Range("H9:H" & lastrow)
@@ -329,6 +331,9 @@ Sub receita()
 
 Application.ScreenUpdating = False
 
+' vari√°vel global
+EstaPastaDeTrabalho.Importar_Variaveis_Globais
+
 Set atualizador = ThisWorkbook
 Set ls = atualizador.Sheets("LONG & SHORT")
 Set base = atualizador.Sheets("BASE")
@@ -341,11 +346,12 @@ codigo = ls.Range("C3").Value
 
 lastrow = ls.Cells(Rows.Count, 2).End(xlUp).Row
 
-ChDir ThisWorkbook.Path
-ChDir ".."
-caminho = CurDir
+' caminho usando a vari√°vel global
+Dim caminhoReceita As String
+caminhoReceita = fso.BuildPath(ONEDRIVE_GERAL, "Ferramentas\Boletera\Receita\" & broker)
 
-Set arquivobroker = Workbooks.Open(caminho & "\3 - RECEITA\" & broker & "\RECEITA AVULSA.xlsx", Password:="2022")
+' abre o arquivo com o caminho modificado
+Set arquivobroker = Workbooks.Open(caminhoReceita & "\RECEITA AVULSA.xlsx", Password:="2022")
 Set abaplanilha = arquivobroker.Sheets("Plan1")
 
 lastrowreceita = abaplanilha.Cells(Rows.Count, 2).End(xlUp).Row + 1
