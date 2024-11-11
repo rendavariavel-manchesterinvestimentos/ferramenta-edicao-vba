@@ -20,7 +20,7 @@ fim:
     OutMail.Display
     On Error Resume Next
     With OutMail
-        .Subject = "Auditoria para execução de ordens - Manchester/XP"
+        .Subject = "Auditoria para execuÃ§Ã£o de ordens - Manchester/XP"
         .HTMLBody = Mensagem & "<br>" & .HTMLBody
         .Display
     End With
@@ -51,7 +51,7 @@ fim:
     OutMail.Display
     On Error Resume Next
     With OutMail
-        .Subject = "Auditoria para execução de ordens - Manchester/XP"
+        .Subject = "Auditoria para execuÃ§Ã£o de ordens - Manchester/XP"
         .HTMLBody = Mensagem & "<br>" & .HTMLBody
         .Display
     End With
@@ -83,7 +83,7 @@ fim:
     Signature = OutMail.HTMLBody
     On Error Resume Next
     With OutMail
-        .Subject = "Auditoria para execução de ordens - Manchester/XP"
+        .Subject = "Auditoria para execuÃ§Ã£o de ordens - Manchester/XP"
         .HTMLBody = Mensagem & Signature
         .Display
     End With
@@ -114,7 +114,7 @@ fim:
     OutMail.Display
     On Error Resume Next
     With OutMail
-        .Subject = "Auditoria para execução de ordens - Manchester/XP"
+        .Subject = "Auditoria para execuÃ§Ã£o de ordens - Manchester/XP"
         .HTMLBody = Mensagem & "<br>" & .HTMLBody
         .Display
     End With
@@ -145,7 +145,7 @@ fim:
     OutMail.Display
     On Error Resume Next
     With OutMail
-        .Subject = "Auditoria para execução de ordens - Manchester/XP"
+        .Subject = "Auditoria para execuÃ§Ã£o de ordens - Manchester/XP"
         .HTMLBody = Mensagem & "<br>" & .HTMLBody
         .Display
     End With
@@ -207,4 +207,3 @@ Function RangetoHTML(rng As Range)
     Set fso = Nothing
     Set TempWB = Nothing
 End Function
-

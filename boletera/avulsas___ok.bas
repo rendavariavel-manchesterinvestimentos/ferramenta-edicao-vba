@@ -101,7 +101,6 @@ Sub EXPORT_BASKET()
     Dim caminhoBaskets As String
     Dim caminhoModelo As String
     Dim salvar As String
-    Dim salvarBoleta As String
     Dim modelo As String
     Dim data As String
     Dim cliente As String
@@ -131,7 +130,6 @@ Sub EXPORT_BASKET()
 
     ' Define os caminhos de salvamento e nome do arquivo de modelo
     salvar = fso.BuildPath(caminhoReceita, boletera.Range("F5").Value)
-    salvarBoleta = caminhoBaskets
     modelo = caminhoModelo
 
     ' Cria diretório e copia o arquivo modelo caso não exista
@@ -160,8 +158,10 @@ Sub EXPORT_BASKET()
     export.Range("A1:R1", export.Range("A1:R1").End(xlDown)).Copy
     Workbooks.Add
     ActiveSheet.Paste
-    ActiveWorkbook.SaveAs Filename:=fso.BuildPath(salvarBoleta, arqnome & ".xlsx"), FileFormat:=xlOpenXMLWorkbook, CreateBackup:=False
+    ActiveWorkbook.SaveAs Filename:=fso.BuildPath(caminhoBaskets, arqnome & ".xls"), FileFormat:=xlOpenXMLWorkbook, CreateBackup:=False
     ActiveWindow.Close
+
+    Application.Wait Now + TimeValue("00:00:01")
 
     ' Exporta a planilha "BULL PRO" para um arquivo CSV
     bullpro.Range("A1:R1", bullpro.Range("A1:R1").End(xlDown)).Copy
@@ -169,7 +169,7 @@ Sub EXPORT_BASKET()
     ActiveSheet.Paste
     ActiveSheet.Range("A1:R1", ActiveSheet.Range("A1:R1").End(xlDown)).Copy
     ActiveSheet.Range("A1").PasteSpecial xlPasteValues
-    ActiveWorkbook.SaveAs Filename:=fso.BuildPath(salvarBoleta, arqnome & ".csv"), FileFormat:=xlCSV, CreateBackup:=False
+    ActiveWorkbook.SaveAs Filename:=fso.BuildPath(caminhoBaskets, arqnome & ".csv"), FileFormat:=xlCSV, CreateBackup:=False
     ActiveWindow.Close
 
     ' Verifica se há dados na célula D5 da planilha "DASH BSKT"
@@ -326,3 +326,5 @@ Sub BASKET_TWAP_CIO()
     ThisWorkbook.Protect Structure:=True, Windows:=False, Password:="senhadaboletera"
     'MsgBox "Basket copiada"
 End Sub
+
+
