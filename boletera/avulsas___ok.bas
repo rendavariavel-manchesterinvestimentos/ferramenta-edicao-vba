@@ -127,7 +127,7 @@ Sub EXPORT_BASKET()
     ' Define os caminhos principais usando a variável global ONEDRIVE_GERAL
     caminhoReceita = fso.BuildPath(ONEDRIVE_GERAL, "Ferramentas\Boletera\Receita")
     caminhoBaskets = fso.BuildPath(ONEDRIVE_GERAL, "Ferramentas\Boletera\Baskets")
-    caminhoModelo = fso.BuildPath(caminhoReceita, "MODELO/RECEITA AVULSA.xlsx")
+    caminhoModelo = fso.BuildPath(ONEDRIVE_GERAL, "Ferramentas\Boletera\Templates\RECEITA AVULSA.xlsx")
 
     ' Define os caminhos de salvamento e nome do arquivo de modelo
     salvar = fso.BuildPath(caminhoReceita, boletera.Range("F5").Value)
