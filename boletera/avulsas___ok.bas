@@ -107,7 +107,7 @@ Sub EXPORT_BASKET()
     Dim cliente As String
     Dim broker As Variant
     Dim nome As String
-    Dim testeNA As Boolean
+    Dim testeNA
     Dim arqnome As String
     Dim wbRece As Workbook
     Dim Dlin As Long
@@ -125,9 +125,9 @@ Sub EXPORT_BASKET()
     Set fso = CreateObject("Scripting.FileSystemObject")
 
     ' Define os caminhos principais usando a variável global ONEDRIVE_GERAL
-    caminhoReceita = fso.BuildPath(ONEDRIVE_GERAL, "Ferramentas\Boletera\Receita")
-    caminhoBaskets = fso.BuildPath(ONEDRIVE_GERAL, "Ferramentas\Boletera\Baskets")
-    caminhoModelo = fso.BuildPath(ONEDRIVE_GERAL, "Ferramentas\Boletera\Templates\RECEITA AVULSA.xlsx")
+    caminhoReceita = fso.BuildPath(EstaPastaDeTrabalho.ONEDRIVE_GERAL, "Ferramentas\Boletera\Receita")
+    caminhoBaskets = fso.BuildPath(EstaPastaDeTrabalho.ONEDRIVE_GERAL, "Ferramentas\Boletera\Baskets")
+    caminhoModelo = fso.BuildPath(EstaPastaDeTrabalho.ONEDRIVE_GERAL, "Ferramentas\Boletera\Templates\RECEITA AVULSA.xlsx")
 
     ' Define os caminhos de salvamento e nome do arquivo de modelo
     salvar = fso.BuildPath(caminhoReceita, boletera.Range("F5").Value)
@@ -148,10 +148,10 @@ Sub EXPORT_BASKET()
     nome = boletera.Range("C5").Value
 
     ' Se cliente for "EX Mesa", registra como "NOVO" no nome do arquivo
-    testeNA = (boletera.Range("C5").Value = CVErr(xlErrNA))
-    If (testeNA) Then
+    If IsError(boletera.Range("C5").Value) Then
         nome = "NOVO"
     End If
+
 
     ' Define o nome do arquivo a ser salvo
     arqnome = "(AÇÕES) " & Year(Date) & " " & Format(Month(Date), "00") & " " & Format(Day(Date), "00") & " " & nome & " " & boletera.Range("C4").Value & " " & boletera.Range("F5") & " " & broker
