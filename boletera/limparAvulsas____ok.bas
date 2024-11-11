@@ -1,17 +1,17 @@
 Attribute VB_Name = "limparAvulsas____ok"
 Option Explicit
-Sub LIMPAR_CUSTÓDIA()
+Sub LIMPAR_CUSTï¿½DIA()
 '
-' LIMPAR_CUSTÓDIA Macro
+' LIMPAR_CUSTï¿½DIA Macro
 '
     Dim arqBoletera As Workbook
     Dim base As Worksheet
-    
+
     Set arqBoletera = ThisWorkbook
     Set base = arqBoletera.Sheets("BASE")
 
     base.Range("E7:H100000").ClearContents
-    
+
 End Sub
 
 Sub LIMPAR_SALDOS()
@@ -20,7 +20,7 @@ Sub LIMPAR_SALDOS()
 '
     Dim arqBoletera As Workbook
     Dim base As Worksheet
-    
+
     Set arqBoletera = ThisWorkbook
     Set base = arqBoletera.Sheets("BASE")
 

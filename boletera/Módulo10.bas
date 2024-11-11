@@ -1,22 +1,22 @@
-Attribute VB_Name = "Módulo10"
+Attribute VB_Name = "Mï¿½dulo10"
     Sub EMAIL_DIA_AUTOMATICO()
     Dim nome As String
     Dim EnviarPara As String
     Dim titulo As String
     Dim Outlook As Outlook.Application
-         
+
     startrow = 2
     nextrow = startrow + 1
     nome = Cells(startrow, 1)
     EnviarPara = Cells(startrow, 25)
     titulo = Cells(startrow, 26) 'Inicializacao da macro.
-    
+
     'Outlook.MailItem.SenderEmailAddress = "mesarv@manchesterinvest.com.br"
-    
+
     Do Until ActiveSheet.Cells(startrow, 1) = ""
         nomeOld = nome
         nome = Cells(startrow, 1)
-        
+
         Do While Cells(startrow, 1).Value = Cells(nextrow, 1).Value
                 startrow = startrow + 1
                 nome = Cells(nextrow, 1)
@@ -24,58 +24,58 @@ Attribute VB_Name = "Módulo10"
                 EnviarPara = Cells(startrow, 25)
                 titulo = Cells(startrow, 26)
             Loop
-            
+
         With ActiveSheet
             .Range("$A$1:$AW$15001").AutoFilter Field:=1, Criteria1:=nome
             If Not .AutoFilterMode Then .UsedRange.AutoFilter
             lastrow = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
-            
+
             Set objeto_outlook = CreateObject("Outlook.Application")
             Set Email = objeto_outlook.CreateItem(0)
-            
-            
+
+
             Email.To = EnviarPara
             Email.Subject = titulo
             Email.Display
-            
-            texto1 = ("Olá, tudo bem?<br><br><u>LEMBRETE: MATERIAL EXPRESSAMENTE PROIBIDO DE SER ENVIADO AOS CLIENTES</u><br/>") _
-& "<br> Seguem os vencimentos do dia de hoje. <b> Entrar em contato com o cliente quando a operação for NÃO MESA </b>, ou seja, não existir um broker relacionado.<br>" _
-& "<br><i><b>Legenda:</i></b><br/>" & "<br><i>•Financeiro saída: Valor de operação já com os ajustes das opções (aproximado).</i>" _
-& "<br><i>•Operações sob custódia: O resultado final não é visto em nota pois o ativo estará em carteira.</i>" _
-& "<br><i>•Booster K.O com R$0,00: Operação virou pó e ativo permanece em carteira." _
-& "<br><i>•Valor Entrada Estruturada: É o valor do ativo no dia que a operação estruturada foi realizada, sendo o valor de referência para cálculo do Resultado Estruturada.<br>Observação: Valor Entrada Estruturada nem sempre é o mesmo valor do Preço Médio. Se atentar para operações sob custódia." _
-            
 
-            texto2 = "<br><br><b> OPERAÇÃO RUBI/RUBI BIDIRECIONAL </b><br/>" _
-& "<br>Caso a operação tenha sido feita COM compra do ativo a venda será automática, a mesma acontecerá no leilão de fechamento a preço MOC(fechamento do fixing)." _
-& "<br>Operações SOB CUSTÓDIA a venda dos ativos precisa ser feita manualmente, nesta situação entrar em contato com a Mesa RV ou vender por conta própria.<br/>" _
-& "<br><b> OPERAÇÃO BOOSTER K.O </b><br/>" _
-& "<br><b>Cenário 1:</b> A operação estruturada dobra os ganhos até o limite da barreira em relação ao preço de entrada.Tudo que ação subir até esse intervalo o cliente tem de ganho dobrado por conta da operação estruturada." _
-& "<br><b>Cenário 2:</b> Caso em qualquer momento a ação suba mais que a barreira em relação ao preço de entrada, a operação de ganho dobrado deixa de existir e você passa a ter um limite de ganho máximo da barreira.<br/>" _
-& "<br><b> OPERAÇÕES RISK </b><br/>" _
-& "<br> O objetivo da operação é obter lucro com a alta do ativo sem desembolso de caixa, mas assumindo riscos na queda." _
-& "<br> É uma operação apenas para cliente com perfil agressivo, pois se trata de alavancagem." _
-& "<br><br><b> OPERAÇÃO PUT  </b><br/>" _
-& "<br> A operação é utilizada com o objetivo de ganhar com a desvalorização do ativo." _
-& "<br> O valor desembolsado no início da operação é o prêmio que consiste também no risco máximo dela." _
-& "<br> Caso o ativo tenha virado <i> pó </i> , o resultado final se encontra zerado. <br/>" _
+            texto1 = ("Olï¿½, tudo bem?<br><br><u>LEMBRETE: MATERIAL EXPRESSAMENTE PROIBIDO DE SER ENVIADO AOS CLIENTES</u><br/>") _
+& "<br> Seguem os vencimentos do dia de hoje. <b> Entrar em contato com o cliente quando a operaï¿½ï¿½o for Nï¿½O MESA </b>, ou seja, nï¿½o existir um broker relacionado.<br>" _
+& "<br><i><b>Legenda:</i></b><br/>" & "<br><i>ï¿½Financeiro saï¿½da: Valor de operaï¿½ï¿½o jï¿½ com os ajustes das opï¿½ï¿½es (aproximado).</i>" _
+& "<br><i>ï¿½Operaï¿½ï¿½es sob custï¿½dia: O resultado final nï¿½o ï¿½ visto em nota pois o ativo estarï¿½ em carteira.</i>" _
+& "<br><i>ï¿½Booster K.O com R$0,00: Operaï¿½ï¿½o virou pï¿½ e ativo permanece em carteira." _
+& "<br><i>ï¿½Valor Entrada Estruturada: ï¿½ o valor do ativo no dia que a operaï¿½ï¿½o estruturada foi realizada, sendo o valor de referï¿½ncia para cï¿½lculo do Resultado Estruturada.<br>Observaï¿½ï¿½o: Valor Entrada Estruturada nem sempre ï¿½ o mesmo valor do Preï¿½o Mï¿½dio. Se atentar para operaï¿½ï¿½es sob custï¿½dia." _
 
-        texto3 = "<br><b> OPERAÇÕES PUT SPREAD </b><br/>" _
-& "<br> Também chamada de <i> Trava de Baixa </i> possui o objetivo de ganhar com a desvalorização moderada do ativo." _
-& "<br>O preço de entrada equivale ao risco máximo que essa estrutura apresenta." _
-& "<br> Lembre-se que ela é bastante utilizada como proteção. <br/>" _
-& "<br><i>Para falar desses cenário de risco acionar a Mesa Rv. </i> <br/>" _
-& "<br><span style=""color:#FF0000""><i>Este relatório é gerencial, desenvolvido pela Mesa Rv para auxílio no controle das posições. Por regras de compliance, não podemos enviar esse tipo de material para o cliente final, por configurar confecção de relatório. Essa infração está sujeita a multas pesadas por parte da XP. </i></span style=""color:#FF0000""" _
-& "<br><br><i><b>Considerações: os valores estão sendo enviados conforme o mercado neste momento, a operação é finalizada com o preço de FECHAMENTO.Pedimos atenção para este ponto e para as operações sem venda automática, pois o cliente terá de ter em conta o valor para ajuste das opções.</b></i>" _
-           
+
+            texto2 = "<br><br><b> OPERAï¿½ï¿½O RUBI/RUBI BIDIRECIONAL </b><br/>" _
+& "<br>Caso a operaï¿½ï¿½o tenha sido feita COM compra do ativo a venda serï¿½ automï¿½tica, a mesma acontecerï¿½ no leilï¿½o de fechamento a preï¿½o MOC(fechamento do fixing)." _
+& "<br>Operaï¿½ï¿½es SOB CUSTï¿½DIA a venda dos ativos precisa ser feita manualmente, nesta situaï¿½ï¿½o entrar em contato com a Mesa RV ou vender por conta prï¿½pria.<br/>" _
+& "<br><b> OPERAï¿½ï¿½O BOOSTER K.O </b><br/>" _
+& "<br><b>Cenï¿½rio 1:</b> A operaï¿½ï¿½o estruturada dobra os ganhos atï¿½ o limite da barreira em relaï¿½ï¿½o ao preï¿½o de entrada.Tudo que aï¿½ï¿½o subir atï¿½ esse intervalo o cliente tem de ganho dobrado por conta da operaï¿½ï¿½o estruturada." _
+& "<br><b>Cenï¿½rio 2:</b> Caso em qualquer momento a aï¿½ï¿½o suba mais que a barreira em relaï¿½ï¿½o ao preï¿½o de entrada, a operaï¿½ï¿½o de ganho dobrado deixa de existir e vocï¿½ passa a ter um limite de ganho mï¿½ximo da barreira.<br/>" _
+& "<br><b> OPERAï¿½ï¿½ES RISK </b><br/>" _
+& "<br> O objetivo da operaï¿½ï¿½o ï¿½ obter lucro com a alta do ativo sem desembolso de caixa, mas assumindo riscos na queda." _
+& "<br> ï¿½ uma operaï¿½ï¿½o apenas para cliente com perfil agressivo, pois se trata de alavancagem." _
+& "<br><br><b> OPERAï¿½ï¿½O PUT  </b><br/>" _
+& "<br> A operaï¿½ï¿½o ï¿½ utilizada com o objetivo de ganhar com a desvalorizaï¿½ï¿½o do ativo." _
+& "<br> O valor desembolsado no inï¿½cio da operaï¿½ï¿½o ï¿½ o prï¿½mio que consiste tambï¿½m no risco mï¿½ximo dela." _
+& "<br> Caso o ativo tenha virado <i> pï¿½ </i> , o resultado final se encontra zerado. <br/>" _
+
+        texto3 = "<br><b> OPERAï¿½ï¿½ES PUT SPREAD </b><br/>" _
+& "<br> Tambï¿½m chamada de <i> Trava de Baixa </i> possui o objetivo de ganhar com a desvalorizaï¿½ï¿½o moderada do ativo." _
+& "<br>O preï¿½o de entrada equivale ao risco mï¿½ximo que essa estrutura apresenta." _
+& "<br> Lembre-se que ela ï¿½ bastante utilizada como proteï¿½ï¿½o. <br/>" _
+& "<br><i>Para falar desses cenï¿½rio de risco acionar a Mesa Rv. </i> <br/>" _
+& "<br><span style=""color:#FF0000""><i>Este relatï¿½rio ï¿½ gerencial, desenvolvido pela Mesa Rv para auxï¿½lio no controle das posiï¿½ï¿½es. Por regras de compliance, nï¿½o podemos enviar esse tipo de material para o cliente final, por configurar confecï¿½ï¿½o de relatï¿½rio. Essa infraï¿½ï¿½o estï¿½ sujeita a multas pesadas por parte da XP. </i></span style=""color:#FF0000""" _
+& "<br><br><i><b>Consideraï¿½ï¿½es: os valores estï¿½o sendo enviados conforme o mercado neste momento, a operaï¿½ï¿½o ï¿½ finalizada com o preï¿½o de FECHAMENTO.Pedimos atenï¿½ï¿½o para este ponto e para as operaï¿½ï¿½es sem venda automï¿½tica, pois o cliente terï¿½ de ter em conta o valor para ajuste das opï¿½ï¿½es.</b></i>" _
+
            Email.HTMLBody = texto1 & RangetoHTML(Range("C1:W" & lastrow)) & texto2 & texto3 & "<br>" & Email.HTMLBody _
-           
+
            'Email.HTMLBody = texto1 & RangetoHTML(Range("C1:W" & lastrow)) & texto2 & texto3 & "<br>" & Email.HTMLBody
 
             'Email.Send
-            
-            
-            
+
+
+
             If .Cells.AutoFilter Then .Cells.AutoFilter
             startrow = startrow + 1
             nextrow = nextrow + 1

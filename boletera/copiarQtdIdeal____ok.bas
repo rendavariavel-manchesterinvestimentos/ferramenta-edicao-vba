@@ -7,10 +7,10 @@ Attribute copiarQtdIdealAvulsas.VB_ProcData.VB_Invoke_Func = " \n14"
 '
     Dim arqBoletera As Workbook
     Dim boletera As Worksheet
-    
+
     Set arqBoletera = ThisWorkbook
     Set boletera = arqBoletera.Sheets("BOLET. AVULSAS")
-    
+
     Range("I11:I80").Copy
     Range("K11").PasteSpecial xlPasteValues
 End Sub
@@ -18,11 +18,11 @@ Sub copiarQtdIdealMultiplas()
 
     Dim arqBoletera As Workbook
     Dim boletera As Worksheet
-    
+
     Set arqBoletera = ThisWorkbook
-    Set boletera = arqBoletera.Sheets("BOLET. ORDENS MÚLTIPLAS")
-    
+    Set boletera = arqBoletera.Sheets("BOLET. ORDENS Mï¿½LTIPLAS")
+
     Range("k11:k80").Copy
     Range("m11").PasteSpecial xlPasteValues
-    
+
 End Sub

@@ -1,25 +1,25 @@
 Attribute VB_Name = "cotizaMultiplas____ok"
 Option Explicit
 Sub cotizaMultiplas()
-    
+
     Dim arqBoletera As Workbook
     Dim boletera As Worksheet
-    
+
     Dim lRow As Integer
     Dim tickerAlvo As String
     Dim i As Integer
     Dim funcBullPro As String
     Dim funcBull As String
     Dim funcFinal As String
-    
+
     'Base/Planilhas
     Set arqBoletera = ThisWorkbook
-    Set boletera = arqBoletera.Sheets("BOLET. ORDENS MÚLTIPLAS")
+    Set boletera = arqBoletera.Sheets("BOLET. ORDENS Mï¿½LTIPLAS")
     '-----------
-    
+
     Application.ScreenUpdating = False
-    
-    
+
+
     lRow = boletera.Cells(Rows.Count, 4).End(xlUp).Row
     Application.DisplayAlerts = False
     For i = 11 To lRow
@@ -47,16 +47,16 @@ Sub cotizaMultiplas()
             funcFinal = "=SEERRO(" & funcFinal & ")"
         End If
     End If
-    
+
     If (boletera.Cells(i, 4).Value) = "" Then
         boletera.Cells(i, 32).Value = ""
     Else
         boletera.Cells(i, 31).FormulaLocal = funcFinal
         boletera.Cells(i, 32).Value = tickerAlvo
     End If
-    
+
     Next
-    
+
     Application.ScreenUpdating = True
     Application.DisplayAlerts = True
 End Sub

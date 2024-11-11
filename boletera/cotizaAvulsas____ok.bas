@@ -4,21 +4,21 @@ Sub cotizaAvulsas()
 
     Dim arqBoletera As Workbook
     Dim boletera As Worksheet
-    
+
     Dim lRow As Integer
     Dim tickerAlvo As String
     Dim i As Integer
     Dim funcBullPro As String
     Dim funcBull As String
     Dim funcFinal As String
-    
+
     'Base/Planilhas
     Set arqBoletera = ThisWorkbook
     Set boletera = arqBoletera.Sheets("BOLET. AVULSAS")
     '-----------
-    
+
     Application.ScreenUpdating = False
-    
+
     lRow = boletera.Cells(Rows.Count, 2).End(xlUp).Row
     Application.DisplayAlerts = False
     For i = 11 To lRow
@@ -46,17 +46,17 @@ Sub cotizaAvulsas()
             funcFinal = "=SEERRO(" & funcFinal & ")"
         End If
     End If
-    
+
     If (boletera.Cells(i, 2).Value) = "" Then
         boletera.Cells(i, 32).Value = ""
     Else
         boletera.Cells(i, 31).FormulaLocal = funcFinal
         boletera.Cells(i, 32).Value = tickerAlvo
     End If
-    
+
     Next
-    
+
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
-    
+
 End Sub

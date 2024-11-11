@@ -2,12 +2,12 @@ Attribute VB_Name = "limpar___ok"
 Option Explicit
 Sub limparMultiplas()
 Attribute limparMultiplas.VB_ProcData.VB_Invoke_Func = " \n14"
-    
+
     Dim arqBoletera As Workbook
     Dim boleta As Worksheet
-    
+
     Set arqBoletera = ThisWorkbook
-    Set boleta = arqBoletera.Sheets("BOLET. ORDENS MÚLTIPLAS")
+    Set boleta = arqBoletera.Sheets("BOLET. ORDENS Mï¿½LTIPLAS")
 
     With boleta
         .Range("M11:M80").ClearContents
@@ -15,15 +15,15 @@ Attribute limparMultiplas.VB_ProcData.VB_Invoke_Func = " \n14"
         .Range("d11:e80").ClearContents
         .Range("AE11:AF80").ClearContents
     End With
-    
+
     'MsgBox ("Feito")
-    
+
 End Sub
 Sub limparAvulsas()
-    
+
     Dim arqBoletera As Workbook
     Dim boleta As Worksheet
-    
+
     Set arqBoletera = ThisWorkbook
     Set boleta = arqBoletera.Sheets("BOLET. AVULSAS")
 
@@ -34,6 +34,6 @@ Sub limparAvulsas()
         .Range("AE11:AF80").ClearContents
     End With
     'MsgBox ("Feito")
-    
+
 End Sub
 

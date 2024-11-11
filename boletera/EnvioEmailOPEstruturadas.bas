@@ -14,12 +14,12 @@ Function FormatarEmail(caminhoArquivo As String, dados As Object) As String
     Dim chave As Variant
     Dim conteudoArquivo As String
     Dim stream As Object
-    
+
     ' Checa se o argumento dados é Dicionário
     If Not TypeName(dados) = "Dictionary" Then
         Err.Raise Number:=13, Description:="Type Mismatch: O argumento não é um dicionário válido."
     End If
-    
+
     ' Criar o objeto ADODB.Stream para leitura em UTF-8
     Set stream = CreateObject("ADODB.Stream")
     stream.Type = 2 ' Tipo de dados de texto
@@ -30,7 +30,7 @@ Function FormatarEmail(caminhoArquivo As String, dados As Object) As String
     ' Ler o conteúdo do arquivo e armazenar na variável
     conteudoArquivo = stream.ReadText
     stream.Close
-    
+
     'Removendo variavel da memoria
     Set stream = Nothing
 
@@ -48,33 +48,33 @@ Function IdentificarCaminhoTemplate(valor As String) As String
     ' Função para indentificar o template referente ao tipo de estrutura
     ' Args:
         '- Valor: tipo de estrutura escolhido pelo broker
-        
+
     ' Returns:
         '- O caminho do arquivo HTML
-     
+
     EstaPastaDeTrabalho.Importar_Variaveis_Globais
 
     CaminhoTemplates = EstaPastaDeTrabalho.fso.BuildPath(EstaPastaDeTrabalho.ONEDRIVE_GERAL, "Ferramentas\Boletera\Templates")
-    
+
     Select Case valor
         Case "Alocação Protegida"
             IdentificarCaminhoTemplate = EstaPastaDeTrabalho.fso.BuildPath(CaminhoTemplates, "alocacaoprotegida.html")
-        
+
         Case "Booster"
             IdentificarCaminhoTemplate = EstaPastaDeTrabalho.fso.BuildPath(CaminhoTemplates, "booster.html")
-            
+
         Case "Booster Shield"
             IdentificarCaminhoTemplate = EstaPastaDeTrabalho.fso.BuildPath(CaminhoTemplates, "boostershield.html")
-            
+
         Case "Collar UI"
             IdentificarCaminhoTemplate = EstaPastaDeTrabalho.fso.BuildPath(CaminhoTemplates, "collarui.html")
-            
+
         Case "Financiamento"
             IdentificarCaminhoTemplate = EstaPastaDeTrabalho.fso.BuildPath(CaminhoTemplates, "financiamento.html")
-            
+
         Case "Rubi"
             IdentificarCaminhoTemplate = EstaPastaDeTrabalho.fso.BuildPath(CaminhoTemplates, "rubi.html")
-        
+
         Case Else
             IdentificarCaminhoTemplate = ""
     End Select
@@ -83,18 +83,18 @@ Function FormatarParaMoeda(valor As Double) As String
     ' Funcao que formata valores para tipo Moeda
     ' Args:
         '- valor: valor que sera formatado
-    
+
     ' Returns:
         '- valor formatado
 
     FormatarParaMoeda = "R$ " & Format(valor, "#,##0.00")
-    
+
 End Function
 
 Function CriarDict(nomeEstrutura As String, ws As Worksheet) As Object
     'Funcao para criar dicionario com dados de uma estrutura com
     'base no nome da estrutura
-    
+
     'Args:
         '- nomeEstrutura: nome da na célula D11 usada para criar o dicionário
         '- ws: nome do sheets do arquivo Excel
@@ -102,7 +102,7 @@ Function CriarDict(nomeEstrutura As String, ws As Worksheet) As Object
         '- dicionário com os argumentos dos arquivos HTML de cada estrutura
 
     'Declarando o dicionario
-    
+
     Dim dados As Object
     Set dados = CreateObject("Scripting.Dictionary")
 
@@ -121,7 +121,7 @@ Function CriarDict(nomeEstrutura As String, ws As Worksheet) As Object
             dados.Add "operacao", ws.Range("P11").Value
             dados.Add "FinanceiroExposto", FormatarParaMoeda(ws.Range("K11").Value * ws.Range("N11").Value)
             dados.Add "PerdaMax", Format(ws.Range("L11").Value - ws.Range("M11").Value, "0.00%")
-        
+
         Case "Booster"
             dados.Add "Conta", ws.Range("A11").Value
             dados.Add "Ativo", ws.Range("J11").Value
@@ -200,7 +200,7 @@ Function CriarDict(nomeEstrutura As String, ws As Worksheet) As Object
             dados.Add "FinanceiroExposto", FormatarParaMoeda(ws.Range("K11").Value * ws.Range("L11").Value)
             dados.Add "B1", Format((SubtracaoBarreira + 0.0001), "0.00%")
             dados.Add "SubtracaoStrike", Format((ws.Range("N11").Value - 1), "0.00%")
-        
+
     End Select
 
     Set CriarDict = dados
@@ -208,7 +208,7 @@ End Function
 
 Function montarEmail(emailAssessor As String, emailCliente As String, corpoEmail As String, assuntoEmail As String)
     ' Função que monta o email de envio das operações
-    
+
     'Args:
         '- emailAssessor: Email que ficará em cópia
         '- emailCliente: Email de quem receberá o email
@@ -216,7 +216,7 @@ Function montarEmail(emailAssessor As String, emailCliente As String, corpoEmail
 
     Dim outApp As Outlook.Application
     Dim OutMail As Outlook.MailItem
-    
+
     Set outApp = CreateObject("Outlook.Application")
     Set OutMail = outApp.CreateItem(olMailItem)
 
@@ -239,24 +239,24 @@ Sub EnviarEmailOperação()
     Dim emailCliente As String
     Dim nomeEstrutura As String
     Dim ws As Worksheet
-    
+
     Set ws = ThisWorkbook.Sheets("ENVIO OP. ESTRUTRADAS")
-    
+
     ' Definindo valores para as variáveis
     nomeEstrutura = ws.Range("G11").Value
     emailAssessor = ws.Range("E11").Value
     emailCliente = ws.Range("C11").Value
     assuntoEmail = "Detalhes da Estrutura - " & nomeEstrutura
-    
+
     ' Identificar o caminho do template
     caminhoTemplate = IdentificarCaminhoTemplate(nomeEstrutura)
-    
+
     ' Criar o dicionário com os dados do email
     Set dadosEmail = CriarDict(nomeEstrutura, ws)
-    
+
     ' Formatar o corpo do email com o template
     corpoEmail = FormatarEmail(caminhoTemplate, dadosEmail)
-    
+
     ' Montar e enviar o email
     montarEmail emailAssessor, emailCliente, corpoEmail, assuntoEmail
 End Sub

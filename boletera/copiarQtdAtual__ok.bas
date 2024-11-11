@@ -6,7 +6,7 @@ Sub copiarQtdAtualAvulsas()
 '
     Dim arqBoletera As Workbook
     Dim boletera As Worksheet
-    
+
     Set arqBoletera = ThisWorkbook
     Set boletera = arqBoletera.Sheets("BOLET. AVULSAS")
 
@@ -20,9 +20,9 @@ Sub copiarQtdAtualMultiplas()
 '
     Dim arqBoletera As Workbook
     Dim boletera As Worksheet
-    
+
     Set arqBoletera = ThisWorkbook
-    Set boletera = arqBoletera.Sheets("BOLET. ORDENS MÚLTIPLAS")
+    Set boletera = arqBoletera.Sheets("BOLET. ORDENS Mï¿½LTIPLAS")
 
     boletera.Range("H11:H80").Copy
     boletera.Range("m11").PasteSpecial xlPasteValues
